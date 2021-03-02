@@ -5,9 +5,9 @@ import { ToggleLink } from "../ToggleLink";
 export class CategoryNavigation extends Component {
   render() {
     return <React.Fragment>
-      <ToggleLink to={this.props.baseUrl} className="btn btn-secondary btn-block">All</ToggleLink>
+      <ToggleLink to={ `${this.props.baseUrl}/all` } exact={ false } className="btn btn-block">All</ToggleLink>
       { this.props.categories && this.props.categories.map(cat =>
-        <ToggleLink className="btn btn-secondary btn-block"
+        <ToggleLink className="btn btn-block"
               key={cat} to={`${this.props.baseUrl}/${cat.toLowerCase()}`}>
           {cat}
         </ToggleLink>
