@@ -24,5 +24,10 @@ export const OrdersConnector = compose(
         setSortProperty: (key) => { vars.sort = key; refetch(vars)},
       })
     }
-  )
+  ),
+  graphql(shipOrder, {
+    props: ({ mutate }) => ({
+      toggleShipped: (id, shipped) => mutate({ variables: { id, shipped }})
+    })
+  })
 )(OrdersTable);

@@ -1,7 +1,6 @@
 var faker = require("faker");
 faker.seed(100); // append
-var data = [];
-var categories = ["Watersports", "Soccer", "Chess", "Running"];
+var categories = ["Watersports", "Soccer", "Chess"];
 var products = [];
 faker.seed(100);
 for (let i=1; i<=503; i++) {
@@ -48,10 +47,4 @@ for (let i = 1; i <= 103; i++) {
   orders.push(order);
 }
 
-module.exports = function () {
-  return {
-    categories: categories,
-    products: products,
-    orders: []
-  }
-}
+module.exports = () => ({ categories, products, orders })
