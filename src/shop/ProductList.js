@@ -8,7 +8,7 @@ export class ProductList extends Component {
     return this.props.products.map(p =>
       <div className="card m-1 p-1 bg-light" key={p.id}>
         <h4>
-          {p.name}
+          {p.name} ({p.id})
           <span className="badge badge-pill badge-primary float-right">
             ${p.price.toFixed(2)}
           </span>
