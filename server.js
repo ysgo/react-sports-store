@@ -34,7 +34,6 @@ const createServer = () => {
 createServer();
 
 app.use(cors());
-app.use(jsonServer.bodyParser)
 app.use(auth);
 app.use(jsonServer.bodyParser)
 app.use('/api', (req, resp, next) => router(req, resp, next));
