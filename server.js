@@ -37,8 +37,8 @@ createServer();
 app.use(history());
 app.use('/', express.static('./build'));
 app.use(cors());
-app.use(auth);
 app.use(jsonServer.bodyParser)
+app.use(auth);
 app.use('/api', (req, resp, next) => router(req, resp, next));
 app.use("/graphql", (req, resp, next) => graph(req, resp, next));
 

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const APP_SECRET = 'myappsecret', USERNAME = 'admin', PASSWORD = 'secret';
 const anonOps = [{ method: 'GET', urls: ['/api/products', '/api/categories'] },
-  { method: 'POST', urls: '/api/orders' }]
+  { method: 'POST', urls: ['/api/orders'] }]
 
 module.exports = function(req, res, next) {
   if(anonOps.find(op => op.method === req.method
