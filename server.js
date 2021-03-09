@@ -2,12 +2,12 @@ const express = require('express');
 const jsonServer = require('json-server');
 const chokidar = require('chokidar');
 const cors = require('cors');
-
 const fs = require("fs");
 const { buildSchema } = require("graphql");
 const graphqlHTTP = require("express-graphql");
 const queryResolvers  = require("./serverQueriesResolver");
 const mutationResolvers = require("./serverMutationsResolver");
+const auth = require('./authMiddleware');
 
 const fileName = process.argv[2] || './data.js'
 const port = process.argv[3] || 3500;
@@ -21,8 +21,8 @@ const createServer = () => {
   delete require.cache[require.resolve(fileName)];
   setTimeout(() => {
     router = jsonServer.router(fileName.endsWith('.js') ? require(fileName)() : fileName);
-    let schema =  fs.readFileSync("./sportsstore/serverQueriesSchema.graphql", "utf-8")
-      + fs.readFileSync("./sportsstore/serverMutationsSchema.graphql", "utf-8");
+    let schema =  fs.readFileSync("./serverQueriesSchema.graphql", "utf-8")
+      + fs.readFileSync("./serverMutationsSchema.graphql", "utf-8");
     let resolvers = { ...queryResolvers, ...mutationResolvers };
     graph = graphqlHTTP({
       schema: buildSchema(schema), rootValue: resolvers,
@@ -34,6 +34,8 @@ const createServer = () => {
 createServer();
 
 app.use(cors());
+app.use(jsonServer.bodyParser)
+app.use(auth);
 app.use(jsonServer.bodyParser)
 app.use('/api', (req, resp, next) => router(req, resp, next));
 app.use("/graphql", (req, resp, next) => graph(req, resp, next));
